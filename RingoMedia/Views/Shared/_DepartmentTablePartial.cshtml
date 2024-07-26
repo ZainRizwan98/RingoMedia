@@ -1,0 +1,40 @@
+﻿@model DepartmentVM
+
+<tr>
+    <td>
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse-@Model.Id" aria-expanded="false" aria-controls="collapse-@Model.Id">
+            @if (Model.SubDepartments.Any())
+            {
+                <i class="fas fa-chevron-right" aria-hidden="true"></i>
+            }
+        </button>
+        @Model.DepartmentName
+    </td>
+    <td>
+        @if (!string.IsNullOrEmpty(Model.DepartmentLogo))
+        {
+            <img src="~/images/@Model.DepartmentLogo" alt="@Model.DepartmentName" style="width: 30px; height: 30px" />
+        }
+    </td>
+    <td>
+        <a asp-action="Create" asp-route-parentId="@Model.Id">Create Child</a> |
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+        <a asp-action="Details" asp-route-id="@Model.Id">Details</a> |
+        <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+    </td>
+</tr>
+@if (Model.SubDepartments.Any())
+{
+    <tr>
+        <td colspan="3">
+            <div id="collapse-@Model.Id" class="collapse">
+                <table class="table mb-0">
+                    @foreach (var subDept in Model.SubDepartments)
+                    {
+                        @await Html.PartialAsync("_DepartmentTablePartial", subDept)
+                    }
+                </table>
+            </div>
+        </td>
+    </tr>
+}

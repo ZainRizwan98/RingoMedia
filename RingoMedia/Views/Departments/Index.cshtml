@@ -1,0 +1,51 @@
+﻿@model IEnumerable<DepartmentVM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartmentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartmentLogo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @await Html.PartialAsync("_DepartmentTablePartial", item)
+        }
+    </tbody>
+</table>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="collapse"]').on('click', function () {
+                var $this = $(this);
+                var $icon = $this.find('i');
+
+                if ($this.attr('aria-expanded') === 'true') {
+                    $icon.removeClass('fa-chevron-down').addClass('fa-chevron-right');
+                } else {
+                    $icon.removeClass('fa-chevron-right').addClass('fa-chevron-down');
+                }
+            });
+        });
+    </script>
+}
+
